@@ -89,14 +89,17 @@ void execute_comando(char key) {
             break;
             
         case '*':
-            printf("Comando: Tocar buzzer\n");
+            printf("Comando: Tocar buzzer por 2 segundos.\n");
             gpio_put(BUZZER, 1);  
-            sleep_ms(500);        
+            sleep_ms(2000);        
             gpio_put(BUZZER, 0);
+            printf("Comando: Buzzer desligado.\n");
+            printf("\n");
             break;
 
         default:
-            printf("Tecla pressionada: %c, sem comando associado.\n", key);
+            printf("Comando: Sem comando associado a tecla %c.\n", key);
+            printf("\n");
             break;
     }
 }
@@ -108,7 +111,8 @@ void print_instructions() {
     printf("  - Tecla 'B': Acende o LED verde.\n");
     printf("  - Tecla 'C': Acende o LED azul.\n");
     printf("  - Tecla '*': Emite som no buzzer.\n");
-    printf("Qualquer outra tecla irá apagar todos os LEDs.\n");
+    printf("Esperando que uma tecla seja pressionada:\n");
+    printf("\n");
 }
 
 int main() {
