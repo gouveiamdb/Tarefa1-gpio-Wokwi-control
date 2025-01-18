@@ -11,6 +11,8 @@
 #define COL3 2
 #define COL4 1
 
+#define BUZZER 21
+
 
 // Mapeamento das teclas do Keypad
 const char keys[4][4] = {
@@ -47,6 +49,8 @@ void setup_gpio() {
     gpio_pull_up(COL3);
     gpio_pull_up(COL4);
 
+    gpio_init(BUZZER);
+    gpio_set_dir(BUZZER, GPIO_OUT);
 }
 
 // Função para verificar qual tecla foi pressionada
@@ -69,6 +73,38 @@ char scan_keypad() {
     return '\0';
 }
 
+// Função para executar comandos com base na tecla pressionada
+void execute_comando(char key) {
+    switch (key) {
+        case 'A':
+            //ligar led vermelho
+            break;
+
+        case 'B':
+            //ligar led verde
+            break;
+
+        case 'C':
+            //ligar led azul
+            break;
+
+        case 'D':    
+            //ligar todos os leds
+            break;
+            
+        case '*':
+            printf("Comando: Tocar buzzer\n");
+            gpio_put(BUZZER, 1);  
+            sleep_ms(500);        
+            gpio_put(BUZZER, 0);
+            break;
+
+        default:
+            printf("Tecla pressionada: %c, sem comando associado.\n", key);
+            break;
+    }
+}
+
 int main() {
     // Inicializar o sistema padrão e configurar GPIOs
     stdio_init_all();
@@ -81,7 +117,8 @@ int main() {
         char key = scan_keypad();
         if (key != '\0') {  // Se uma tecla foi pressionada
             printf("Tecla pressionada: %c\n", key);
-            sleep_ms(300);  // Debounce
+            execute_comando(key);
+            sleep_ms(300);         // Debounce
         }
 
         sleep_ms(50); // Pequeno atraso para evitar leituras incorretas
