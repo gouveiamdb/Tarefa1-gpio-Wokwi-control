@@ -87,10 +87,6 @@ void execute_comando(char key) {
         case 'C':
             //ligar led azul
             break;
-
-        case 'D':    
-            //ligar todos os leds
-            break;
             
         case '*':
             printf("Comando: Tocar buzzer\n");
@@ -105,13 +101,23 @@ void execute_comando(char key) {
     }
 }
 
+void print_instructions() {
+    printf("Essa simulação controla os LEDs RGB e um buzzer usando um teclado matricial 4x4.\n");
+    printf("Aperte as seguintes teclas para controlar os dispositivos:\n");
+    printf("  - Tecla 'A': Acende o LED vermelho.\n");
+    printf("  - Tecla 'B': Acende o LED verde.\n");
+    printf("  - Tecla 'C': Acende o LED azul.\n");
+    printf("  - Tecla '*': Emite som no buzzer.\n");
+    printf("Qualquer outra tecla irá apagar todos os LEDs.\n");
+}
+
 int main() {
     // Inicializar o sistema padrão e configurar GPIOs
     stdio_init_all();
     setup_gpio();
 
     // Instruções iniciais sobre o programa
-    printf("Pressione uma tecla no teclado matricial.\n");
+    print_instructions();
 
     while (1) {
         char key = scan_keypad();
