@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "author": "Pedro Henrique Ferreira Amorim Da Silva",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "type": "board-pi-pico-w",
+      "id": "pico",
+      "top": -22.45,
+      "left": 205.15,
+      "attrs": { "builder": "pico-sdk" }
+    },
+    {
+      "type": "wokwi-membrane-keypad",
+      "id": "keypad1",
+      "top": -88.4,
+      "left": -359.2,
+      "attrs": {}
+    }
+  ],
+  "connections": [
+    [ "pico:GP0", "$serialMonitor:RX", "", [] ],
+    [ "pico:GP1", "$serialMonitor:TX", "", [] ],
+    [ "keypad1:R1", "pico:GP8", "green", [ "v86.4", "h451.2", "v-240", "h19.2" ] ],
+    [ "keypad1:R2", "pico:GP7", "green", [ "v76.8", "h431.6", "v-249.6" ] ],
+    [ "keypad1:R3", "pico:GP6", "green", [ "v67.2", "h412.5", "v-249.6" ] ],
+    [ "keypad1:R4", "pico:GP5", "green", [ "v57.6", "h393.4", "v-259.2" ] ],
+    [ "keypad1:C1", "pico:GP4", "green", [ "v48", "h374.3", "v-259.2" ] ],
+    [ "keypad1:C2", "pico:GP3", "green", [ "v38.4", "h355.2", "v-259.2" ] ],
+    [ "keypad1:C3", "pico:GP2", "green", [ "v28.8", "h335.85", "v-259.2" ] ],
+    [ "keypad1:C4", "pico:GP1", "green", [ "v19.2", "h316.5", "v-268.8" ] ]
+  ],
+  "dependencies": {}
+}
