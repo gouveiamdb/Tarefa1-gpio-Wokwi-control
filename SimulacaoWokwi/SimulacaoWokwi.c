@@ -13,6 +13,10 @@
 
 #define BUZZER 21
 
+// Definição dos pinos dos LEDs
+#define LED_GREEN 11  // LED verde
+#define LED_BLUE 12   // LED azul
+#define LED_RED 13    // LED vermelho
 
 // Mapeamento das teclas do Keypad
 const char keys[4][4] = {
@@ -49,6 +53,19 @@ void setup_gpio() {
     gpio_pull_up(COL3);
     gpio_pull_up(COL4);
 
+    // Configuração dos pinos dos LEDs
+gpio_init(LED_RED);
+gpio_init(LED_GREEN);
+gpio_init(LED_BLUE);
+gpio_set_dir(LED_RED, GPIO_OUT);
+gpio_set_dir(LED_GREEN, GPIO_OUT);
+gpio_set_dir(LED_BLUE, GPIO_OUT);
+
+// Inicializando LEDs apagados
+gpio_put(LED_RED, 0);
+gpio_put(LED_GREEN, 0);
+gpio_put(LED_BLUE, 0);
+
     gpio_init(BUZZER);
     gpio_set_dir(BUZZER, GPIO_OUT);
 }
@@ -75,17 +92,33 @@ char scan_keypad() {
 
 // Função para executar comandos com base na tecla pressionada
 void execute_comando(char key) {
+
+     // Desliga todos os LEDs antes de acionar o próximo
+    gpio_put(LED_RED, 0);
+    gpio_put(LED_GREEN, 0);
+    gpio_put(LED_BLUE, 0);
+
     switch (key) {
-        case 'A':
-            //ligar led vermelho
+       case 'A':
+            // Ligar LED vermelho
+            gpio_put(LED_RED, 1);
             break;
 
         case 'B':
-            //ligar led verde
+            // Ligar LED verde
+            gpio_put(LED_GREEN, 1);
             break;
 
         case 'C':
-            //ligar led azul
+            // Ligar LED azul
+            gpio_put(LED_BLUE, 1);
+            break;
+
+        case 'D':
+            // Ligar todos os LEDs
+            gpio_put(LED_RED, 1);
+            gpio_put(LED_GREEN, 1);
+            gpio_put(LED_BLUE, 1);
             break;
             
         case '*':
@@ -110,7 +143,10 @@ void print_instructions() {
     printf("  - Tecla 'A': Acende o LED vermelho.\n");
     printf("  - Tecla 'B': Acende o LED verde.\n");
     printf("  - Tecla 'C': Acende o LED azul.\n");
+    printf("  - Tecla 'D': Acende todos os LEDs.\n");
     printf("  - Tecla '*': Emite som no buzzer.\n");
+    
+
     printf("Esperando que uma tecla seja pressionada:\n");
     printf("\n");
 }
