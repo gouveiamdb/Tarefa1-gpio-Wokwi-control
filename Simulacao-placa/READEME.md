@@ -23,7 +23,7 @@ Este projeto demonstra o controle de LEDs RGB e um buzzer utilizando um teclado 
   - Verde: 11.
   - Azul: 12.
 - **Pino do Buzzer**:
-  - 10.
+  - 10 .
 
 ## Instruções de Uso
 1. **Montagem do Circuito**:
