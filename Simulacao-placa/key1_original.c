@@ -99,6 +99,36 @@ void beep_buzzer() {
     gpio_put(BUZZER_PIN, 0);
 }
 
+void turn_on_red() {
+    gpio_put(RED_LED, true);
+    sleep_ms(2000);
+    gpio_put(RED_LED, false);
+}
+
+void turn_on_blue() {
+    gpio_put(BLUE_LED, true);
+    sleep_ms(2000);
+    gpio_put(BLUE_LED, false);
+}
+
+void turn_on_green() {
+    gpio_put(GREEN_LED, true);
+    sleep_ms(2000);
+    gpio_put(GREEN_LED, false);
+}
+
+void turn_on_leds() {
+    gpio_put(RED_LED, true);
+    sleep_ms(1000);
+    gpio_put(RED_LED, false);
+    gpio_put(GREEN_LED, true);
+    sleep_ms(1000);
+    gpio_put(GREEN_LED, false);
+    gpio_put(BLUE_LED, true);
+    sleep_ms(1000);
+    gpio_put(BLUE_LED, false);
+}
+
 int main() {
     stdio_init_all();  // Inicializar saída padrão (USB/Serial)
     init_keypad();     // Inicializar o teclado
@@ -113,26 +143,25 @@ int main() {
             printf("Tecla pressionada: %c\n", key);
             sleep_ms(300);  // Debounce
         }
-        // LEDs
-        while (key == 'A') { gpio_put(RED_LED, true); } 
-        gpio_put(RED_LED, false);
-        
-        while (key == 'B') { gpio_put(GREEN_LED, true); }
-        gpio_put(GREEN_LED, false);
 
-        while (key == 'C') { gpio_put(BLUE_LED, true); } 
-        gpio_put(BLUE_LED, false);
-
-        while (key == 'D') {
-            gpio_put(RED_LED, true);
-            sleep_ms(1000);
-            gpio_put(RED_LED, false);
-            gpio_put(GREEN_LED, true);
-            sleep_ms(1000);
-            gpio_put(GREEN_LED, false);
-            gpio_put(BLUE_LED, true);
-            sleep_ms(1000);
-            gpio_put(BLUE_LED, false);
+        switch (key) {
+        case 'A':
+            turn_on_red();
+            break;
+        case 'B':
+            turn_on_green();
+            break;
+        case 'C':
+            turn_on_blue();
+            break;
+        case 'D':
+            turn_on_leds();
+            break;
+        case '*':
+            beep_buzzer();
+            break;
+        default:
+            break;
         }
     }
 
