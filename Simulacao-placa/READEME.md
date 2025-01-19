@@ -1,32 +1,29 @@
-# Simulação Wokwi com Raspberry Pi Pico
+# Simulação de Placa com Raspberry Pi Pico
 
 ## Descrição
-Este projeto é uma simulação para controle de LEDs RGB e um buzzer utilizando um teclado matricial 4x4, implementado em uma Raspberry Pi Pico. Ele explora o uso de GPIOs para criar uma interface interativa e responsiva que executa comandos com base nas teclas pressionadas.
+Este projeto demonstra o controle de LEDs RGB e um buzzer utilizando um teclado matricial 4x4 em uma Raspberry Pi Pico. Ele explora GPIOs e interação em tempo real para executar ações com base nas teclas pressionadas.
 
 ## Funcionalidades
-- Controle de LEDs RGB com as cores:
-  - Vermelho.
-  - Verde.
-  - Azul.
-  - Todos simultaneamente.
-- Emissão de som no buzzer por 2 segundos.
-- Interação através de um teclado matricial 4x4.
+- Acender LEDs RGB individualmente (vermelho, verde e azul).
+- Sequência de iluminação com os LEDs.
+- Acionar o buzzer por 2 segundos.
+- Controle via teclado matricial 4x4.
 
 ## Estrutura do Projeto
 ### Arquivos Principais
-- **SimulacaoWokwi.c**: Implementação do código-fonte principal.
+- **SimulaçãoPlaca.c**: Implementação do código-fonte principal.
 - **CMakeLists.txt**: Arquivo de configuração para compilação do projeto.
 
 ### Configurações de GPIOs
 - **Pinos do Teclado Matricial (Keypad)**:
-  - Linhas: 8, 7, 6, 5.
-  - Colunas: 4, 3, 2, 1.
+  - Linhas: 16, 17, 18, 19.
+  - Colunas: 20, 4, 9, 8.
 - **Pinos dos LEDs**:
   - Vermelho: 13.
   - Verde: 11.
   - Azul: 12.
 - **Pino do Buzzer**:
-  - 21.
+  - 10.
 
 ## Instruções de Uso
 1. **Montagem do Circuito**:
@@ -44,22 +41,21 @@ Este projeto é uma simulação para controle de LEDs RGB e um buzzer utilizando
 
 3. **Execução do Programa**:
    - Carregue o arquivo binário gerado na Raspberry Pi Pico.
-   - Interaja com o sistema pressionando as teclas do teclado matricial.
+   - Pressione as teclas do teclado matricial para interagir com o sistema.
 
 ## Comandos
 - `A`: Acende o LED vermelho.
 - `B`: Acende o LED verde.
 - `C`: Acende o LED azul.
-- `D`: Acende todos os LEDs simultaneamente.
+- `D`: Inicia uma sequência de iluminação com os LEDs.
 - `*`: Ativa o buzzer por 2 segundos.
-- Qualquer outra tecla: Desliga os LEDs que estiverem acesos.
 
 ## Observações
-- O programa inclui um mecanismo de debounce para evitar leituras incorretas.
-- As instruções são exibidas no console para orientar o usuário.
+- Inclui debounce para evitar leituras incorretas no teclado matricial.
+- As instruções são exibidas no console para auxiliar o usuário.
 
 ## Vídeo Explicativo
-[Assista ao vídeo explicativo clicando aqui.](https://youtu.be/8GTAyxUcUm8)
+[Assista ao vídeo explicativo clicando aqui.](https://youtube.com/shorts/lx8Kyn2L46M?feature=share)
 
 ## Referências
 - Documentação do Raspberry Pi Pico SDK.
