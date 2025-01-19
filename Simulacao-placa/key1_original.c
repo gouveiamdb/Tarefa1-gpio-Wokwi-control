@@ -1,6 +1,9 @@
 #include "pico/stdlib.h"
 #include <stdio.h>
 
+// Pino GPIO para o buzzer
+#define BUZZER_PIN 10
+
 // Defina os pinos GPIO para as linhas e colunas
 #define ROW_1 16
 #define ROW_2 17
@@ -68,9 +71,24 @@ char scan_keypad() {
     return '\0';  // Nenhuma tecla pressionada
 }
 
+// Inicializar o buzzer
+void init_buzzer() {
+    gpio_init(BUZZER_PIN);
+    gpio_set_dir(BUZZER_PIN, GPIO_OUT);
+    gpio_put(BUZZER_PIN, 0);
+}
+
+// Acionar o buzzer por 2 segundos
+void beep_buzzer() {
+    gpio_put(BUZZER_PIN, 1);
+    sleep_ms(2000);
+    gpio_put(BUZZER_PIN, 0);
+}
+
 int main() {
     stdio_init_all();  // Inicializar saída padrão (USB/Serial)
     init_keypad();     // Inicializar o teclado
+    init_buzzer();     // Inicializar o buzzer
 
     printf("Pressione uma tecla no teclado matricial.\n");
 
