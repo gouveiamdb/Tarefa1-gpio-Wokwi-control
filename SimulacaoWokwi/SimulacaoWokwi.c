@@ -11,14 +11,19 @@
 #define COL3 2
 #define COL4 1
 
+// Definição dos pinos do Buzze
 #define BUZZER 21
 
 // Definição dos pinos dos LEDs
-#define LED_GREEN 11  // LED verde
-#define LED_BLUE 12   // LED azul
-#define LED_RED 13    // LED vermelho
+#define LED_GREEN 11  
+#define LED_BLUE 12   
+#define LED_RED 13    
 
-// Mapeamento das teclas do Keypad
+/**
+ * @brief Mapeamento das teclas do Keypad
+ * 
+ * A matriz de teclas representa a organização do teclado matricial 4x4.
+ */
 const char keys[4][4] = {
     {'1', '2', '3', 'A'},
     {'4', '5', '6', 'B'},
@@ -27,7 +32,74 @@ const char keys[4][4] = {
 };
 
 
-// Função para configurar os GPIOs
+/**
+ * @brief Configura os GPIOs para o teclado matricial, LEDs e buzzer.
+ * 
+ * Configura as linhas (ROW) como saídas e as colunas (COL) como entradas com pull-up.
+ * Além de configurar os pinos dos LEDs e do buzzer como saídas.
+ */
+void setup_gpio();
+
+
+/**
+ * @brief Verifica qual tecla foi pressionada no teclado matricial.
+ * 
+ * Itera pelas linhas e verifica se alguma coluna foi pressionada.
+ * 
+ * @return O caractere da tecla pressionada ou '\0' se nenhuma tecla for pressionada.
+ */
+char scan_keypad();
+
+
+/**
+ * @brief Executa comandos baseados na tecla pressionada.
+ * 
+ * Executa comandos para acender os LEDs e emitir som no buzzer.
+ * Além de imprimir mensagens no console para informar o comando executado.
+ *
+ * @param key A tecla pressionada.
+ */
+void execute_comando(char key);
+
+
+/**
+ * @brief Exibe as instruções iniciais do programa.
+ * 
+ * Exibe as instruções para o usuário sobre como controlar os LEDs e o buzzer.
+ * E o que cada tecla do teclado matricial faz.
+ */
+void print_instructions();
+
+
+/**
+ * @brief Função principal do programa.
+ * 
+ * Inicializa os GPIOs, exibe instruções e monitora as teclas pressionadas para executar comandos.
+ * Fazendo uso das funções de controle dos LEDs e do buzzer.
+ * 
+ * @return Retorna 0 em caso de execução bem-sucedida.
+ */
+int main() {
+    // Inicializar o sistema padrão e configurar GPIOs
+    stdio_init_all();
+    setup_gpio();
+
+    // Instruções iniciais sobre o programa
+    print_instructions();
+
+    while (1) {
+        char key = scan_keypad();
+        if (key != '\0') {  // Se uma tecla foi pressionada
+            printf("Tecla pressionada: %c\n", key);
+            execute_comando(key);
+            sleep_ms(300);         // Debounce
+        }
+
+        sleep_ms(50); // Pequeno atraso para evitar leituras incorretas
+    }
+}
+
+// Implementações das funções
 void setup_gpio() {
     // Configurando as linhas (ROW) como saídas
     gpio_init(ROW1);
@@ -54,23 +126,23 @@ void setup_gpio() {
     gpio_pull_up(COL4);
 
     // Configuração dos pinos dos LEDs
-gpio_init(LED_RED);
-gpio_init(LED_GREEN);
-gpio_init(LED_BLUE);
-gpio_set_dir(LED_RED, GPIO_OUT);
-gpio_set_dir(LED_GREEN, GPIO_OUT);
-gpio_set_dir(LED_BLUE, GPIO_OUT);
+    gpio_init(LED_RED);
+    gpio_init(LED_GREEN);
+    gpio_init(LED_BLUE);
+    gpio_set_dir(LED_RED, GPIO_OUT);
+    gpio_set_dir(LED_GREEN, GPIO_OUT);
+    gpio_set_dir(LED_BLUE, GPIO_OUT);
 
-// Inicializando LEDs apagados
-gpio_put(LED_RED, 0);
-gpio_put(LED_GREEN, 0);
-gpio_put(LED_BLUE, 0);
+    // Inicializando LEDs apagados
+    gpio_put(LED_RED, 0);
+    gpio_put(LED_GREEN, 0);
+    gpio_put(LED_BLUE, 0);
 
+    // Configuração do buzzer
     gpio_init(BUZZER);
     gpio_set_dir(BUZZER, GPIO_OUT);
 }
 
-// Função para verificar qual tecla foi pressionada
 char scan_keypad() {
     // Iterando pelas linhas
     for (int row = 0; row < 4; row++) {
@@ -90,10 +162,8 @@ char scan_keypad() {
     return '\0';
 }
 
-// Função para executar comandos com base na tecla pressionada
 void execute_comando(char key) {
-
-     // Desliga todos os LEDs antes de acionar o próximo
+    // Desliga todos os LEDs antes de acionar o próximo
     gpio_put(LED_RED, 0);
     gpio_put(LED_GREEN, 0);
     gpio_put(LED_BLUE, 0);
@@ -101,21 +171,29 @@ void execute_comando(char key) {
     switch (key) {
        case 'A':
             // Ligar LED vermelho
+            printf("Comando: Led vermelho ligado.\n");
+            printf("\n");
             gpio_put(LED_RED, 1);
             break;
 
         case 'B':
             // Ligar LED verde
+            printf("Comando: Led verde ligado.\n");
+            printf("\n");
             gpio_put(LED_GREEN, 1);
             break;
 
         case 'C':
             // Ligar LED azul
+            printf("Comando: Led azul ligado.\n");
+            printf("\n");
             gpio_put(LED_BLUE, 1);
             break;
 
         case 'D':
             // Ligar todos os LEDs
+            printf("Comando: Todos os LEDs sendo ligados.\n");
+            printf("\n");
             gpio_put(LED_RED, 1);
             gpio_put(LED_GREEN, 1);
             gpio_put(LED_BLUE, 1);
@@ -131,7 +209,7 @@ void execute_comando(char key) {
             break;
 
         default:
-            printf("Comando: Sem comando associado a tecla %c.\n", key);
+            printf("Comando: Desligando todos os LEDs.\n");
             printf("\n");
             break;
     }
@@ -145,28 +223,7 @@ void print_instructions() {
     printf("  - Tecla 'C': Acende o LED azul.\n");
     printf("  - Tecla 'D': Acende todos os LEDs.\n");
     printf("  - Tecla '*': Emite som no buzzer.\n");
-    
-
+    printf("  - Qualquer outra tecla: Desliga os LEDs que estão acesos.\n");
     printf("Esperando que uma tecla seja pressionada:\n");
     printf("\n");
-}
-
-int main() {
-    // Inicializar o sistema padrão e configurar GPIOs
-    stdio_init_all();
-    setup_gpio();
-
-    // Instruções iniciais sobre o programa
-    print_instructions();
-
-    while (1) {
-        char key = scan_keypad();
-        if (key != '\0') {  // Se uma tecla foi pressionada
-            printf("Tecla pressionada: %c\n", key);
-            execute_comando(key);
-            sleep_ms(300);         // Debounce
-        }
-
-        sleep_ms(50); // Pequeno atraso para evitar leituras incorretas
-    }
 }
