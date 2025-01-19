@@ -26,7 +26,7 @@ Este projeto é uma simulação para controle de LEDs RGB e um buzzer utilizando
   - Verde: 11.
   - Azul: 12.
 - **Pino do Buzzer**:
-  - 21.
+  - 21 .
 
 ## Instruções de Uso
 1. **Montagem do Circuito**:
