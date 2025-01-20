@@ -59,7 +59,7 @@ Este projeto é uma simulação para controle de LEDs RGB e um buzzer utilizando
 - As instruções são exibidas no console para orientar o usuário.
 
 ## Vídeo Explicativo
-[Assista ao vídeo explicativo clicando aqui.]([https://youtu.be/8GTAyxUcUm8](https://youtube.com/shorts/jJZM4AZCTZ0))
+[Assista ao vídeo explicativo clicando aqui.] (https://youtube.com/shorts/jJZM4AZCTZ0)
 
 ## Referências
 - Documentação do Raspberry Pi Pico SDK.
